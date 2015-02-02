@@ -17,6 +17,8 @@ fields = {'date': 'Date',
           'ah_change': 'After Hours Change'}
 
 def write_row(ticker_name, stock_values):
+    print "stock_values @ write_row", stock_values
+
     file_name = "stocktracker -" + ticker_name + ".csv"
     if os.access(file_name, os.F_OK):
         file_mode = 'ab'
@@ -31,6 +33,22 @@ def write_row(ticker_name, stock_values):
     if file_mode == 'wb':
         csv_writer.writerow(fields)
     csv_writer.writerow(stock_values)
+
+def get_web_html(site_name):
+    opener = urllib2.build_opener(
+        urllib2.HTTPRedirectHandler(),
+        urllib2.HTTPHandler(debuglevel=0),
+        )
+
+    opener.addheaders = [
+        ('User-agent', "Mozilla/4.0 (compatible; MSIE 7.0; "
+                       "Windows NT 5.1; .NET CLR 2.0.50727; "
+                       ".NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)")
+    ]
+
+    url = "http://www.emenar.com"
+    response = opener.open(url)
+    return ''.join(response.readlines())
 
 
 def get_stock_html(ticker_name):
@@ -49,12 +67,28 @@ def get_stock_html(ticker_name):
     response = opener.open(url)
     return ''.join(response.readlines())
 
-def find_quote_section(html):
-    soup = BeautifulSoup(html)
-    quote = soup.find('div')
 
-    #    quote = soup.find('div', attrs = {'class':'yfi_quote_summary'})
-    return quote
+def find_quote_section(html):
+   #  soup = BeautifulSoup(html)
+   #
+   # ## quote = soup.find('div', attrs = {'class':'yfi_quote_summary'})
+   #  print "at class yfi quote summary"
+   #
+   #  quote = soup.findAll('div', attrs = {'class':'yfi_quote_summary'})
+   #  print quote
+   #
+   #  return quote
+
+
+   soup = BeautifulSoup(html)
+   print "soup is tasty"
+   quote = soup._find_all('div')
+   quote = soup.find_all('div', )
+
+##   quote = soup.find_all('class')
+##   quote = soup.find_all('div', attrs = {'class': 'yfi_quote_summary'})
+
+   return quote
 
 def parse_stock_html(html, ticker_name):
     quote = find_quote_section(html)
@@ -64,7 +98,7 @@ def parse_stock_html(html, ticker_name):
     print tick
 
     #<h2>Google Inc.</h2>
-   ## result['stock_name'] = quote.find('h2')
+    result['stock_name'] = quote.find('h2')
     print "Quote --"
     print quote
 
@@ -94,8 +128,15 @@ def is_price_change(value):
 
 if __name__ == '__main__':
     html = get_stock_html('GOOG')
+    ##html = get_web_html('emenar')
     quote = find_quote_section(html)
-    write_row('GOOG', quote)
+    print "Hello"
+    print quote
+
+
+##    write_row('GOOG', quote)
+
+
 ##    stock = parse_stock_html(html, 'GOOG')
 ##    write_row('GOOG', stock)
 ##    print "Hello"
