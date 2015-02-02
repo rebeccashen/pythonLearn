@@ -83,7 +83,7 @@ def find_quote_section(html):
    soup = BeautifulSoup(html)
    print "soup is tasty"
    quote = soup._find_all('div')
-   quote = soup.find_all('div', )
+   quote = soup.find_all('div', "class")
 
 ##   quote = soup.find_all('class')
 ##   quote = soup.find_all('div', attrs = {'class': 'yfi_quote_summary'})
