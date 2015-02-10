@@ -81,7 +81,7 @@ def find_quote_section(html):
 
 
    soup = BeautifulSoup(html)
-   print "soup is tasty"
+#   print "soup is tasty"
 #   quote = soup._find_all('div')
    quote = soup.find_all('div', 'class')
 
