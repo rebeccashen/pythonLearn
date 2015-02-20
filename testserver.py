@@ -3,11 +3,13 @@ __author__ = 'rebeccashen'
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-# enable debugging
-import cgitb
-cgitb.enable()
 
-print "Content-Type: text/plain;charset=utf-8"
+print "Content-Type: text/html"
 print
-
-print "Hello This is Python speaking!"
+print """\
+<html>
+<body>
+<h2>Hello World!</h2>
+</body>
+</html>
+"""
