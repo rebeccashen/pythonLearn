@@ -4,8 +4,8 @@ __author__ = 'rebeccashen'
 # -*- coding: UTF-8 -*-
 
 
-print "Content-Type: text/html"
-print
+#print "Content-Type: text/html"
+#print
 print """\
 <html>
 <body>
